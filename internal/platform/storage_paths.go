@@ -1,4 +1,4 @@
-package main
+package platform
 
 import (
 	"errors"
@@ -7,28 +7,35 @@ import (
 	"path/filepath"
 )
 
-const appIdentifier = "com.johnny0x38e.investgo"
+const (
+	appDataDirectory         = "investgo"
+	previousAppDataDirectory = "com.johnny0x38e.investgo"
+)
 
 func storageDirectoryForConfigDirectory(configDirectory string) string {
 	if configDirectory == "" {
 		return "data"
 	}
-	return filepath.Join(configDirectory, appIdentifier)
+	return filepath.Join(configDirectory, appDataDirectory)
 }
 
-func storagePathsForConfigDirectory(configDirectory string) (jsonPath, databasePath string) {
+// StoragePathsForConfigDirectory returns the legacy JSON and SQLite paths.
+// An empty config directory uses the local data directory.
+func StoragePathsForConfigDirectory(configDirectory string) (jsonPath, databasePath string) {
 	directory := storageDirectoryForConfigDirectory(configDirectory)
 	return filepath.Join(directory, "state.json"), filepath.Join(directory, "investgo.db")
 }
 
-func logPathForConfigDirectory(configDirectory string) string {
+// LogPathForConfigDirectory returns the log path alongside application data.
+func LogPathForConfigDirectory(configDirectory string) string {
 	return filepath.Join(storageDirectoryForConfigDirectory(configDirectory), "logs", "app.log")
 }
 
-// migrateStorageDirectory runs before logging or SQLite can create the new
+// MigrateStorageDirectory restores the investgo directory from the directory
+// used by v0.4.2. Call it before logging or SQLite can create the destination
 // directory. Renaming the whole directory keeps SQLite sidecars, legacy JSON
 // backups, and logs together. Existing destinations are never merged.
-func migrateStorageDirectory(configDirectory string) (bool, error) {
+func MigrateStorageDirectory(configDirectory string) (bool, error) {
 	if configDirectory == "" {
 		return false, nil
 	}
@@ -42,7 +49,7 @@ func migrateStorageDirectory(configDirectory string) (bool, error) {
 		return false, fmt.Errorf("inspect application data directory: %w", err)
 	}
 
-	source := filepath.Join(configDirectory, "investgo")
+	source := filepath.Join(configDirectory, previousAppDataDirectory)
 	info, err := os.Lstat(source)
 	if errors.Is(err, os.ErrNotExist) {
 		return false, nil

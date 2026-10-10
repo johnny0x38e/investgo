@@ -54,7 +54,7 @@ func main() {
 	if err != nil {
 		configDirectory = ""
 	}
-	migrated, err := migrateStorageDirectory(configDirectory)
+	migrated, err := platform.MigrateStorageDirectory(configDirectory)
 	if err != nil {
 		log.Fatalf("migrate application data directory: %v", err)
 	}
@@ -65,14 +65,14 @@ func main() {
 	}
 	log.SetFlags(log.LstdFlags | log.Lmicroseconds)
 	log.SetOutput(logs.Writer("backend", "stdlib", logger.DeveloperLogError))
-	if err := logs.ConfigureFile(logPathForConfigDirectory(configDirectory)); err != nil {
+	if err = logs.ConfigureFile(platform.LogPathForConfigDirectory(configDirectory)); err != nil {
 		log.Printf("configure log file: %v", err)
 	}
 	defer func() { _ = logs.Close() }() // nolint:errcheck
 
 	logs.Info("backend", "app", "starting InvestGo")
 	if migrated {
-		logs.Info("backend", "storage", "migrated application data directory to "+appIdentifier)
+		logs.Info("backend", "storage", "migrated application data directory to investgo")
 	}
 
 	// Bootstrap the shared HTTP transport with the "system" default so that
@@ -93,7 +93,7 @@ func main() {
 	}
 	registry := marketdata.DefaultRegistry(httpClient, currentSettings)
 
-	legacyStatePath, databasePath := storagePathsForConfigDirectory(configDirectory)
+	legacyStatePath, databasePath := platform.StoragePathsForConfigDirectory(configDirectory)
 	migrationResult, err := store.EnsureSQLiteState(context.Background(), legacyStatePath, databasePath)
 	if err != nil {
 		log.Fatalf("prepare sqlite state: %v", err)

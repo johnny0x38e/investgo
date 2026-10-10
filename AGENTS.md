@@ -96,11 +96,12 @@ workflow does not match unprefixed tags.
 Do not commit provider API keys, proxy credentials, local state, logs,
 SQLite databases, or generated binaries. Live user data is
 `investgo.db` under the OS config directory (on macOS,
-`~/Library/Application Support/com.johnny0x38e.investgo/`); leftover
-`state.json` is legacy. The default macOS Bundle Identifier is
-`com.johnny0x38e.investgo`. Before opening logs or SQLite, startup renames the
-old `investgo/` directory if the new directory does not exist. If both exist,
-it uses the new directory and leaves the old one untouched. Migration errors
+`~/Library/Application Support/investgo/`); leftover `state.json` is legacy.
+The default macOS Bundle Identifier remains `com.johnny0x38e.investgo` and is
+independent of the data directory name. Before opening logs or SQLite, startup
+renames the `com.johnny0x38e.investgo/` directory used by v0.4.2 back to
+`investgo/` if `investgo/` does not exist. If both exist, it uses `investgo/`
+and leaves `com.johnny0x38e.investgo/` untouched. Migration errors
 abort startup rather than creating an empty database. Avoid placing secrets in
 logs or screenshots; use the application's local settings and redaction behavior
 when testing integrations.
