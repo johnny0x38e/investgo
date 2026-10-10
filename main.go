@@ -9,7 +9,6 @@ import (
 	"log/slog"
 	"net/http"
 	"os"
-	"path/filepath"
 	"strings"
 	"sync"
 	"time"
@@ -51,18 +50,30 @@ func main() {
 	// before any application state is touched.
 	wailsupdater.HandleHelperMode()
 
+	configDirectory, err := os.UserConfigDir()
+	if err != nil {
+		configDirectory = ""
+	}
+	migrated, err := migrateStorageDirectory(configDirectory)
+	if err != nil {
+		log.Fatalf("migrate application data directory: %v", err)
+	}
+
 	logs := logger.NewLogBook(400)
 	if terminalLoggingEnabled() {
 		logs.EnableConsole(os.Stderr)
 	}
 	log.SetFlags(log.LstdFlags | log.Lmicroseconds)
 	log.SetOutput(logs.Writer("backend", "stdlib", logger.DeveloperLogError))
-	if err := logs.ConfigureFile(defaultLogPath()); err != nil {
+	if err := logs.ConfigureFile(logPathForConfigDirectory(configDirectory)); err != nil {
 		log.Printf("configure log file: %v", err)
 	}
 	defer func() { _ = logs.Close() }() // nolint:errcheck
 
 	logs.Info("backend", "app", "starting InvestGo")
+	if migrated {
+		logs.Info("backend", "storage", "migrated application data directory to "+appIdentifier)
+	}
 
 	// Bootstrap the shared HTTP transport with the "system" default so that
 	// HTTP clients are available before the Store is initialised. The transport
@@ -82,7 +93,7 @@ func main() {
 	}
 	registry := marketdata.DefaultRegistry(httpClient, currentSettings)
 
-	legacyStatePath, databasePath := defaultStoragePaths()
+	legacyStatePath, databasePath := storagePathsForConfigDirectory(configDirectory)
 	migrationResult, err := store.EnsureSQLiteState(context.Background(), legacyStatePath, databasePath)
 	if err != nil {
 		log.Fatalf("prepare sqlite state: %v", err)
@@ -254,32 +265,6 @@ func main() {
 		log.Printf("run app: %v", err)
 		os.Exit(1)
 	}
-}
-
-func defaultStoragePaths() (jsonPath, databasePath string) {
-	configDirectory, err := os.UserConfigDir()
-	if err != nil {
-		configDirectory = ""
-	}
-	return storagePathsForConfigDirectory(configDirectory)
-}
-
-func storagePathsForConfigDirectory(configDirectory string) (jsonPath, databasePath string) {
-	baseDirectory := filepath.Join("data")
-	if configDirectory != "" {
-		baseDirectory = filepath.Join(configDirectory, "investgo")
-	}
-	return filepath.Join(baseDirectory, "state.json"), filepath.Join(baseDirectory, "investgo.db")
-}
-
-// defaultLogPath returns the default storage path for the log file.
-// Log files and state.json are located at $HOME/Library/Application Support/investgo/.
-func defaultLogPath() string {
-	if configDir, err := os.UserConfigDir(); err == nil {
-		return filepath.Join(configDir, "investgo", "logs", "app.log")
-	}
-
-	return filepath.Join(".", "data", "logs", "app.log")
 }
 
 // terminalLoggingEnabled returns whether the current process should output development logs to the terminal.

@@ -9,10 +9,10 @@ func TestStoragePathsForConfigDirectory(t *testing.T) {
 	t.Parallel()
 
 	jsonPath, databasePath := storagePathsForConfigDirectory(filepath.Join("root", "config"))
-	if want := filepath.Join("root", "config", "investgo", "state.json"); jsonPath != want {
+	if want := filepath.Join("root", "config", "com.johnny0x38e.investgo", "state.json"); jsonPath != want {
 		t.Fatalf("JSON path = %q; want %q", jsonPath, want)
 	}
-	if want := filepath.Join("root", "config", "investgo", "investgo.db"); databasePath != want {
+	if want := filepath.Join("root", "config", "com.johnny0x38e.investgo", "investgo.db"); databasePath != want {
 		t.Fatalf("database path = %q; want %q", databasePath, want)
 	}
 }
