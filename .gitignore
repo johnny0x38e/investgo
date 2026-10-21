@@ -13,4 +13,4 @@ frontend/vendor/
 .vite/
 *.local
 .agents/
-.pnpm-store/v11/
+.pnpm-store/

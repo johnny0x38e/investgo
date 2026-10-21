@@ -97,14 +97,6 @@ Do not commit provider API keys, proxy credentials, local state, logs,
 SQLite databases, or generated binaries. Live user data is
 `investgo.db` under the OS config directory (on macOS,
 `~/Library/Application Support/investgo/`); leftover `state.json` is legacy.
-The default macOS Bundle Identifier remains `com.johnny0x38e.investgo` and is
-independent of the data directory name. Before opening logs or SQLite, startup
-renames the `com.johnny0x38e.investgo/` directory used by v0.4.2 back to
-`investgo/` if `investgo/` does not exist. If both exist, it uses `investgo/`
-and leaves `com.johnny0x38e.investgo/` untouched. Migration errors
-abort startup rather than creating an empty database. Avoid placing secrets in
-logs or screenshots; use the application's local settings and redaction behavior
-when testing integrations.
 
 `PUT /api/settings` is a partial update. Omitted JSON fields keep their stored
 values, including API keys and `developerMode` / `useNativeTitleBar`. The Vue
