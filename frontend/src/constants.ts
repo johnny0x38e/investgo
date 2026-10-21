@@ -14,7 +14,7 @@ import type {
 } from './types';
 
 export const projectMeta = {
-    repositoryUrl: 'https://github.com/Johnny0x38E/InvestGo',
+    repositoryUrl: 'https://github.com/johnny0x38e/investgo',
 } as const;
 
 export function getModuleTabs(): ModuleTab[] {

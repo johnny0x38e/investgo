@@ -213,7 +213,7 @@ func main() {
 	// the unsupported path and the settings UI explains why.
 	if versionIsRelease(appVersion) {
 		updateProvider, providerErr := github.New(github.Config{
-			Repository:    "Johnny0x38E/investgo",
+			Repository:    "johnny0x38e/investgo",
 			ChecksumAsset: "checksums.txt",
 			AssetMatcher:  updateAssetMatcher,
 			// Update downloads are much larger than API requests; reuse the
