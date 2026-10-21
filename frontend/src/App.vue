@@ -11,6 +11,7 @@
     import ConfirmDialog from './components/dialogs/ConfirmDialog.vue';
     import DCADetailDialog from './components/dialogs/DCADetailDialog.vue';
     import ItemDialog from './components/dialogs/ItemDialog.vue';
+    import UpdateDialog from './components/dialogs/UpdateDialog.vue';
     import { appendClientLog, installClientLogCapture } from './devlog';
     import { useDCALedger } from './composables/useDCALedger';
     import { useDeveloperLogs } from './composables/useDeveloperLogs';
@@ -639,6 +640,8 @@
             @update:visible="alertDialogVisible = $event"
             @save="saveAlert"
         />
+
+        <UpdateDialog />
 
         <ConfirmDialog
             v-if="confirmDialogVisible"
