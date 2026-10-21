@@ -54,10 +54,6 @@ func main() {
 	if err != nil {
 		configDirectory = ""
 	}
-	migrated, err := platform.MigrateStorageDirectory(configDirectory)
-	if err != nil {
-		log.Fatalf("migrate application data directory: %v", err)
-	}
 
 	logs := logger.NewLogBook(400)
 	if terminalLoggingEnabled() {
@@ -71,9 +67,6 @@ func main() {
 	defer func() { _ = logs.Close() }() // nolint:errcheck
 
 	logs.Info("backend", "app", "starting InvestGo")
-	if migrated {
-		logs.Info("backend", "storage", "migrated application data directory to investgo")
-	}
 
 	// Bootstrap the shared HTTP transport with the "system" default so that
 	// HTTP clients are available before the Store is initialised. The transport
@@ -93,18 +86,14 @@ func main() {
 	}
 	registry := marketdata.DefaultRegistry(httpClient, currentSettings)
 
-	legacyStatePath, databasePath := platform.StoragePathsForConfigDirectory(configDirectory)
-	migrationResult, err := store.EnsureSQLiteState(context.Background(), legacyStatePath, databasePath)
-	if err != nil {
-		log.Fatalf("prepare sqlite state: %v", err)
-	}
-	if migrationResult.Migrated {
-		logs.Info("backend", "storage", "migrated legacy JSON state to SQLite")
-	}
-
+	databasePath := platform.DatabasePathForConfigDirectory(configDirectory)
 	appDatabase, err := sqlitestorage.Open(databasePath)
 	if err != nil {
 		log.Fatalf("open sqlite state: %v", err)
+	}
+	if err := sqlitestorage.ApplyMigrations(context.Background(), appDatabase); err != nil {
+		_ = appDatabase.Close() // nolint:errcheck
+		log.Fatalf("initialise sqlite schema: %v", err)
 	}
 	instrumentRepository := sqlitestorage.NewInstrumentRepository(appDatabase)
 	poolRepository := sqlitestorage.NewPoolRepository(appDatabase)
