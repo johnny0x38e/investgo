@@ -37,7 +37,9 @@ pnpm build
 
 ## 打包与发布
 
-推送和 Pull Request 会跑类型检查和 Go 测试。要出安装包时，打一个版本 tag：
+推送和 Pull Request 会跑类型检查和 Go 测试。发布前，在 [CHANGELOG.md](./CHANGELOG.md) 中添加与版本 tag 一致的标题（例如 `## v0.3.0`）和面向用户的更新说明。发布流程会将该段内容用于 GitHub Release 和应用内更新提示；缺少对应内容时发布会失败。
+
+要出安装包时，打一个版本 tag：
 
 ```bash
 git tag v0.3.0

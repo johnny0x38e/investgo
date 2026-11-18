@@ -1,4 +1,5 @@
 <script setup lang="ts">
+    import MarkdownIt from 'markdown-it';
     import Button from 'primevue/button';
     import Dialog from 'primevue/dialog';
     import Message from 'primevue/message';
@@ -8,6 +9,7 @@
     import { useI18n } from '../../i18n';
     import type { UpdateStatus } from '../../types';
 
+    const markdown = new MarkdownIt({ html: false, linkify: true });
     const { t } = useI18n();
     const status = ref<UpdateStatus | null>(null);
     const visible = ref(false);
@@ -17,6 +19,7 @@
     let pollTimer: number | undefined;
     let stopped = false;
 
+    const releaseNotesHtml = computed(() => markdown.render(status.value?.releaseNotes ?? ''));
     const state = computed(() => status.value?.state);
     const ready = computed(() => state.value === 'ready');
     const percent = computed(() => {
@@ -115,7 +118,7 @@
             </template>
             <details v-if="status?.releaseNotes" class="update-notes">
                 <summary>{{ t('settings.update.releaseNotes') }}</summary>
-                <p>{{ status.releaseNotes }}</p>
+                <div class="update-notes-body" v-html="releaseNotesHtml" />
             </details>
             <Message v-if="errorMessage" severity="error" :closable="false">{{ errorMessage }}</Message>
         </div>
@@ -161,11 +164,32 @@
         color: var(--muted);
     }
 
-    .update-notes p {
+    .update-notes-body {
         max-height: 240px;
         overflow: auto;
-        white-space: pre-wrap;
         overflow-wrap: anywhere;
         line-height: 1.7;
+    }
+
+    .update-notes-body :deep(h1),
+    .update-notes-body :deep(h2),
+    .update-notes-body :deep(h3) {
+        margin: 16px 0 8px;
+        font-size: 1em;
+    }
+
+    .update-notes-body :deep(p),
+    .update-notes-body :deep(ul),
+    .update-notes-body :deep(ol) {
+        margin: 8px 0;
+    }
+
+    .update-notes-body :deep(ul),
+    .update-notes-body :deep(ol) {
+        padding-left: 1.5em;
+    }
+
+    .update-notes-body :deep(a) {
+        color: var(--accent);
     }
 </style>

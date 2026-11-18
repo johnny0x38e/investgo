@@ -153,16 +153,19 @@ jobs:
 
       - name: Generate release notes
         run: |
-          previous_tag=$(git describe --tags --abbrev=0 "${GITHUB_REF_NAME}^" 2>/dev/null || true)
-          {
-            if [[ -n "$previous_tag" ]]; then
-              printf "## What's Changed\n\n"
-              git log --no-merges --reverse --pretty=format:"- %s ([%h](https://github.com/${GITHUB_REPOSITORY}/commit/%H))" "${previous_tag}..${GITHUB_REF_NAME}"
-              printf "\n\n**Full Changelog**: https://github.com/%s/compare/%s...%s\n" "$GITHUB_REPOSITORY" "$previous_tag" "$GITHUB_REF_NAME"
-            else
-              printf "Initial release.\n"
-            fi
-          } > release-notes.md
+          awk -v version="$GITHUB_REF_NAME" '
+            $0 == "## " version { found = 1; next }
+            found && /^## / { exit }
+            found { print }
+            END { if (!found) exit 1 }
+          ' CHANGELOG.md > release-notes.md || {
+            echo "Missing changelog section for $GITHUB_REF_NAME" >&2
+            exit 1
+          }
+          if ! grep -q '[^[:space:]]' release-notes.md; then
+            echo "Empty changelog section for $GITHUB_REF_NAME" >&2
+            exit 1
+          fi
 
       - name: Download build artifacts
         uses: actions/download-artifact@v8
