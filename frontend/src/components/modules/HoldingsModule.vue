@@ -1,13 +1,12 @@
 <script setup lang="ts">
-    import { computed } from 'vue';
     import Button from 'primevue/button';
     import InputText from 'primevue/inputtext';
     import Tag from 'primevue/tag';
-
-    import DataFreshnessMeta from '../DataFreshnessMeta.vue';
+    import { computed } from 'vue';
     import { formatDateTime, formatMoney, formatPercent, formatRange, formatUnitPrice } from '../../format';
     import { useI18n } from '../../i18n';
     import type { WatchlistItem } from '../../types';
+    import DataFreshnessMeta from '../DataFreshnessMeta.vue';
 
     const props = defineProps<{
         search: string;
@@ -126,7 +125,9 @@
                                     :class="
                                         item.changePercent > 0 ? 'tone-rise' : item.changePercent < 0 ? 'tone-fall' : ''
                                     "
-                                    >{{ formatPercent(item.changePercent) }}</span
+                                    >{{
+                                        formatPercent(item.changePercent)
+                                    }}</span
                                 >
                             </div>
                         </td>
@@ -182,16 +183,13 @@
                                             ? t('holdings.dcaEntries', { count: item.dcaEntries.length })
                                             : t('holdings.firstDCAEntryAria')
                                     "
-                                    :class="[
-                                        'dca-list-button',
-                                        { 'dca-list-button-empty': !item.dcaEntries?.length },
-                                    ]"
+                                    :class="['dca-list-button', { 'dca-list-button-empty': !item.dcaEntries?.length }]"
                                     @click.stop="$emit('show-dca', item)"
                                 />
                             </div>
                         </td>
                         <td class="table-action-cell watch-table-sticky watch-table-sticky-actions">
-                            <div class="action-stack table-action-stack" @click.stop>
+                            <div class="action-stack table-action-stack">
                                 <Button
                                     size="small"
                                     text
@@ -199,7 +197,7 @@
                                     icon="pi pi-thumbtack"
                                     :class="{ 'is-pinned-action': Boolean(item.pinnedAt) }"
                                     :aria-label="item.pinnedAt ? t('holdings.aria.unpin') : t('holdings.aria.pin')"
-                                    @click="$emit('toggle-pin', item)"
+                                    @click.stop="$emit('toggle-pin', item)"
                                 />
                                 <Button
                                     size="small"
@@ -207,7 +205,7 @@
                                     rounded
                                     icon="pi pi-pencil"
                                     :aria-label="t('holdings.aria.edit')"
-                                    @click="$emit('edit-item', item)"
+                                    @click.stop="$emit('edit-item', item)"
                                 />
                                 <Button
                                     size="small"
@@ -216,7 +214,7 @@
                                     severity="danger"
                                     icon="pi pi-trash"
                                     :aria-label="t('holdings.aria.delete')"
-                                    @click="$emit('delete-item', item.id)"
+                                    @click.stop="$emit('delete-item', item.id)"
                                 />
                             </div>
                         </td>

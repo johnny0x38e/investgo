@@ -9,7 +9,12 @@ const clientLogsState = ref<DeveloperLogEntry[]>([]);
 let installed = false;
 let sequence = 0;
 
-const mirrorQueue: Array<{ source: string; scope: string; level: DeveloperLogLevel; message: string }> = [];
+const mirrorQueue: Array<{
+    source: string;
+    scope: string;
+    level: DeveloperLogLevel;
+    message: string;
+}> = [];
 let mirrorFlushTimer = 0;
 
 export const clientLogs = clientLogsState;
@@ -154,6 +159,6 @@ export function redactSensitiveText(message: string): string {
             if (prefix === '?' || prefix === '&') {
                 return match;
             }
-            return match.split('=')[0] + '=***';
+            return `${match.split('=')[0]}=***`;
         });
 }

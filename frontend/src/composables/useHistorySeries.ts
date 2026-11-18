@@ -1,4 +1,4 @@
-import { computed, onBeforeUnmount, ref, watch, type ComputedRef, type Ref } from 'vue';
+import { type ComputedRef, onBeforeUnmount, type Ref, ref, watch } from 'vue';
 
 import { ApiAbortError, api } from '../api';
 import { translate } from '../i18n';
@@ -16,7 +16,7 @@ const HISTORY_CACHE_MAX_SIZE = 60; // max items x intervals
 // The useHistorySeries composable manages the state and logic for fetching and caching historical price data for watchlist items,
 // including handling loading and error states, cache management, and request cancellation.
 export function useHistorySeries(
-    items: Ref<WatchlistItem[]>,
+    _items: Ref<WatchlistItem[]>,
     selectedItem: ComputedRef<WatchlistItem | null>,
     activeModule: Ref<ModuleKey>,
     setStatus: StatusReporter,

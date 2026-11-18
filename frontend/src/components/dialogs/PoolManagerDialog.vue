@@ -1,10 +1,10 @@
 <script setup lang="ts">
-    import { computed, ref, watch } from 'vue';
     import Button from 'primevue/button';
     import Dialog from 'primevue/dialog';
     import InputText from 'primevue/inputtext';
     import Select from 'primevue/select';
     import Tag from 'primevue/tag';
+    import { computed, ref, watch } from 'vue';
 
     import { api } from '../../api';
     import { useI18n } from '../../i18n';

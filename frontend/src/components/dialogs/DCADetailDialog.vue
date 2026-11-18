@@ -1,9 +1,9 @@
 <script setup lang="ts">
-    import { computed, reactive, ref, watch } from 'vue';
     import Button from 'primevue/button';
     import Dialog from 'primevue/dialog';
     import InputNumber from 'primevue/inputnumber';
     import InputText from 'primevue/inputtext';
+    import { computed, reactive, ref, watch } from 'vue';
 
     import { formatMoney, formatNumber, formatPercent, formatUnitPrice, resolvedLocale } from '../../format';
     import { useI18n } from '../../i18n';
@@ -42,7 +42,9 @@
 
     const dialogHeader = computed(() => {
         if (!props.item) return t('dialogs.dcaDetail.title');
-        return t('dialogs.dcaDetail.titleWithName', { name: props.item.name || props.item.symbol });
+        return t('dialogs.dcaDetail.titleWithName', {
+            name: props.item.name || props.item.symbol,
+        });
     });
 
     const entryRows = computed<DCAEntryRow[]>(() =>
@@ -105,7 +107,15 @@
     }
 
     function emptyDraft(): DCAEntryRow {
-        return { id: '', date: todayInputDate(), amount: null, shares: null, price: null, fee: null, note: '' };
+        return {
+            id: '',
+            date: todayInputDate(),
+            amount: null,
+            shares: null,
+            price: null,
+            fee: null,
+            note: '',
+        };
     }
 
     function toInputDate(value: string): string {
@@ -263,18 +273,11 @@
                 <div class="dca-primary-fields">
                     <label class="dca-field">
                         <span>{{ t('dialogs.dcaDetail.quick.date') }}</span>
-                        <input v-model="draft.date" type="date" class="dca-date-input" />
+                        <input v-model="draft.date" type="date" class="dca-date-input">
                     </label>
                     <label class="dca-field">
                         <span>{{ t('dialogs.dcaDetail.quick.amount') }}</span>
-                        <InputNumber
-                            v-model="draft.amount"
-                            :min="0"
-                            :step="100"
-                            :max-fraction-digits="4"
-                            fluid
-                            autofocus
-                        />
+                        <InputNumber v-model="draft.amount" :min="0" :step="100" :max-fraction-digits="4" fluid />
                         <small>{{ item?.currency }}</small>
                     </label>
                     <label v-if="entryMode === 'price'" class="dca-field">
@@ -509,7 +512,7 @@
         color: var(--muted);
         background: transparent;
         border: 0;
-        font: 500 11px/1 var(--font-ui);
+        font: 500 11px / 1 var(--font-ui);
         cursor: pointer;
     }
     .dca-collapse-entry:hover {
@@ -532,14 +535,14 @@
     }
     h3 {
         margin: 0;
-        font: 600 17px/1.2 var(--font-display);
+        font: 600 17px / 1.2 var(--font-display);
         color: var(--ink);
         letter-spacing: -0.01em;
     }
     .dca-entry-heading p {
         max-width: 610px;
         margin: 5px 0 0;
-        font: 400 12px/1.55 var(--font-ui);
+        font: 400 12px / 1.55 var(--font-ui);
         color: var(--muted);
     }
     .dca-mode-switch {
@@ -557,7 +560,7 @@
         background: transparent;
         border: 0;
         border-radius: var(--radius-micro);
-        font: 600 11px/1 var(--font-ui);
+        font: 600 11px / 1 var(--font-ui);
         cursor: pointer;
         transition:
             color 0.18s ease,
@@ -597,7 +600,7 @@
         color: var(--ink);
     }
     .dca-field > span {
-        font: 600 11px/1 var(--font-ui);
+        font: 600 11px / 1 var(--font-ui);
         color: var(--muted);
     }
     .dca-field > small {
@@ -605,7 +608,7 @@
         right: 9px;
         bottom: 10px;
         z-index: 1;
-        font: 500 9px/1 var(--font-ui);
+        font: 500 9px / 1 var(--font-ui);
         color: var(--muted);
         pointer-events: none;
     }
@@ -618,7 +621,7 @@
         background: var(--control-bg);
         border: 1px solid var(--border-strong);
         border-radius: var(--radius-control);
-        font: 500 12px/1 var(--font-ui);
+        font: 500 12px / 1 var(--font-ui);
         color-scheme: light dark;
         outline: none;
     }
@@ -646,16 +649,16 @@
         border-radius: var(--radius-control);
     }
     .dca-derived-result > span {
-        font: 500 9px/1 var(--font-ui);
+        font: 500 9px / 1 var(--font-ui);
         color: var(--muted);
     }
     .dca-derived-result strong {
-        font: 600 13px/1 var(--font-display);
+        font: 600 13px / 1 var(--font-display);
         color: var(--accent);
         font-variant-numeric: tabular-nums;
     }
     .dca-derived-result small {
-        font: 500 9px/1 var(--font-ui);
+        font: 500 9px / 1 var(--font-ui);
     }
     .dca-optional-toggle {
         display: inline-flex;
@@ -666,7 +669,7 @@
         color: var(--muted);
         background: transparent;
         border: 0;
-        font: 500 11px/1 var(--font-ui);
+        font: 500 11px / 1 var(--font-ui);
         cursor: pointer;
     }
     .dca-optional-toggle:hover {
@@ -706,18 +709,18 @@
         background: var(--panel-strong);
     }
     .dca-summary-cell > span {
-        font: 500 10px/1 var(--font-ui);
+        font: 500 10px / 1 var(--font-ui);
         color: var(--muted);
     }
     .dca-summary-cell > strong {
-        font: 500 13px/1.2 var(--font-display);
+        font: 500 13px / 1.2 var(--font-display);
         color: var(--ink);
         white-space: nowrap;
         font-variant-numeric: tabular-nums;
     }
     .dca-summary-cell strong small {
         margin-left: 4px;
-        font: 400 10px/1 var(--font-ui);
+        font: 400 10px / 1 var(--font-ui);
     }
     .dca-summary-cell .tone-rise {
         color: var(--rise);
@@ -761,7 +764,7 @@
         background: var(--panel-soft);
         border-bottom: 1px solid var(--border);
         box-shadow: 0 1px 0 color-mix(in srgb, var(--border) 80%, transparent);
-        font: 600 10px/1 var(--font-ui);
+        font: 600 10px / 1 var(--font-ui);
     }
     .dca-detail-head > span,
     .dca-detail-row > span,
@@ -774,7 +777,7 @@
         min-height: 42px;
         color: var(--ink);
         border-bottom: 1px solid var(--border);
-        font: 500 12px/1.25 var(--font-display);
+        font: 500 12px / 1.25 var(--font-display);
         font-variant-numeric: tabular-nums;
         transition: background 0.18s ease;
     }
@@ -831,10 +834,10 @@
     }
     .dca-empty-state strong {
         color: var(--ink);
-        font: 600 13px/1.2 var(--font-ui);
+        font: 600 13px / 1.2 var(--font-ui);
     }
     .dca-empty-state span {
-        font: 400 11px/1.5 var(--font-ui);
+        font: 400 11px / 1.5 var(--font-ui);
     }
     @media (max-width: 900px) {
         :global(.p-dialog.dca-ledger-dialog) {

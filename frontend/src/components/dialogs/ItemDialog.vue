@@ -1,11 +1,11 @@
 <script setup lang="ts">
-    import { computed, onBeforeUnmount, ref, watch } from 'vue';
     import Button from 'primevue/button';
     import Dialog from 'primevue/dialog';
     import InputNumber from 'primevue/inputnumber';
     import InputText from 'primevue/inputtext';
     import Select from 'primevue/select';
     import Textarea from 'primevue/textarea';
+    import { computed, onBeforeUnmount, ref, watch } from 'vue';
 
     import { ApiAbortError, api } from '../../api';
     import { currencyOptions, getMarketOptions } from '../../constants';
@@ -94,7 +94,9 @@
                 signal: controller.signal,
             });
             lastLookupKey.value = normalizeLookupKey(result.symbol, result.market);
-            applySymbolLookup(props.form, result, { watchOnly: Boolean(props.watchOnly) });
+            applySymbolLookup(props.form, result, {
+                watchOnly: Boolean(props.watchOnly),
+            });
             lastLookupKey.value = normalizeLookupKey(props.form.symbol, props.form.market);
         } catch (error) {
             if (error instanceof ApiAbortError) {
@@ -227,7 +229,7 @@
             <!-- Acquisition date is only relevant for holdings without DCA entries. -->
             <label v-if="!hasDCA && !props.watchOnly">
                 <span>{{ t('dialogs.item.labels.acquiredAt') }}</span>
-                <input v-model="form.acquiredAt" type="date" />
+                <input v-model="form.acquiredAt" type="date">
             </label>
 
             <p v-if="hasDCA && !props.watchOnly" class="item-dialog-note">

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-    import { computed } from 'vue';
     import Button from 'primevue/button';
+    import { computed } from 'vue';
 
     import { getHotMarketOptions, getModuleTabs } from '../constants';
     import { useI18n } from '../i18n';
@@ -106,6 +106,7 @@
             />
         </div>
 
+        <!-- biome-ignore lint/a11y/noStaticElementInteractions: pointer drag handle for sidebar width -->
         <div class="sidebar-resize-handle" @mousedown.prevent.stop="$emit('start-resize', $event)"></div>
     </aside>
 </template>
@@ -147,7 +148,7 @@
         min-height: 38px;
         padding: 0 12px;
         border-radius: var(--radius-panel);
-        font: 500 12px/1 var(--font-ui);
+        font: 500 12px / 1 var(--font-ui);
         display: inline-flex;
         align-items: center;
         gap: 9px;
@@ -279,7 +280,7 @@
     }
 
     .sidebar-resize-handle::after {
-        content: '';
+        content: "";
         position: absolute;
         top: 16px;
         bottom: 16px;

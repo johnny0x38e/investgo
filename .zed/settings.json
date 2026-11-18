@@ -1,0 +1,107 @@
+{
+    "file_scan_exclusions": [
+        ".DS_Store",
+        ".git",
+        ".vscode",
+        ".openidea",
+        ".thinkrail",
+        ".codegraph"
+    ],
+    "prettier": {
+        "allowed": false
+    },
+    "formatter": {
+        "language_server": {
+            "name": "biome"
+        }
+    },
+    "format_on_save": "on",
+    "code_actions_on_format": {
+        "source.organizeImports.biome": true
+    },
+    "lsp": {
+        "biome": {
+            "settings": {
+                "require_config_file": true
+            }
+        }
+    },
+    "languages": {
+        "JavaScript": {
+            "language_servers": ["!eslint", "!tailwindcss-language-server", "..."],
+            "formatter": {
+                "language_server": {
+                    "name": "biome"
+                }
+            },
+            "code_actions_on_format": {
+                "source.organizeImports.biome": true
+            }
+        },
+        "TypeScript": {
+            "language_servers": ["!eslint", "!tailwindcss-language-server", "..."],
+            "formatter": {
+                "language_server": {
+                    "name": "biome"
+                }
+            },
+            "code_actions_on_format": {
+                "source.organizeImports.biome": true
+            }
+        },
+        "TSX": {
+            "language_servers": ["!eslint", "!tailwindcss-language-server", "..."],
+            "formatter": {
+                "language_server": {
+                    "name": "biome"
+                }
+            },
+            "code_actions_on_format": {
+                "source.organizeImports.biome": true
+            }
+        },
+        "Vue.js": {
+            "language_servers": ["!eslint", "!tailwindcss-language-server", "..."],
+            "formatter": {
+                "language_server": {
+                    "name": "biome"
+                }
+            },
+            "code_actions_on_format": {
+                "source.organizeImports.biome": true
+            }
+        },
+        "JSON": {
+            "language_servers": ["!eslint", "..."],
+            "formatter": {
+                "language_server": {
+                    "name": "biome"
+                }
+            }
+        },
+        "JSONC": {
+            "language_servers": ["!eslint", "..."],
+            "formatter": {
+                "language_server": {
+                    "name": "biome"
+                }
+            }
+        },
+        "CSS": {
+            "language_servers": ["!eslint", "!tailwindcss-language-server", "..."],
+            "formatter": {
+                "language_server": {
+                    "name": "biome"
+                }
+            }
+        },
+        "HTML": {
+            "language_servers": ["!eslint", "!tailwindcss-language-server", "..."],
+            "formatter": {
+                "language_server": {
+                    "name": "biome"
+                }
+            }
+        }
+    }
+}

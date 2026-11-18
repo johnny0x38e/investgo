@@ -1,14 +1,15 @@
 <script setup lang="ts">
-    import { computed, onUnmounted, ref, watch } from 'vue';
     import Button from 'primevue/button';
-    import InputText from 'primevue/inputtext';
     import InputNumber from 'primevue/inputnumber';
+    import InputText from 'primevue/inputtext';
     import Select from 'primevue/select';
     import ToggleSwitch from 'primevue/toggleswitch';
-    import appMark from '../../assets/app-mark.png';
+    import { computed, onUnmounted, ref, watch } from 'vue';
     import { api } from '../../api';
+    import appMark from '../../assets/app-mark.png';
 
     import {
+        COLOR_THEME_SWATCHES,
         getAmountDisplayOptions,
         getColorThemeOptions,
         getCurrencyDisplayOptions,
@@ -17,13 +18,12 @@
         getLocaleOptions,
         getPriceColorOptions,
         getProxyModeOptions,
-        projectMeta,
         getSettingsTabs,
         getThemeModeOptions,
-        COLOR_THEME_SWATCHES,
+        projectMeta,
     } from '../../constants';
-    import { maxHotCacheTTLSeconds, minHotCacheTTLSeconds } from '../../forms';
     import { formatDateTime } from '../../format';
+    import { maxHotCacheTTLSeconds, minHotCacheTTLSeconds } from '../../forms';
     import { useI18n } from '../../i18n';
     import type {
         AppSettings,
@@ -115,12 +115,16 @@
             case 'up-to-date':
                 return t('settings.update.upToDate');
             case 'available':
-                return t('settings.update.available', { version: status.availableVersion ?? '' });
+                return t('settings.update.available', {
+                    version: status.availableVersion ?? '',
+                });
             case 'downloading':
                 if (updatePercent.value === null) {
                     return t('settings.update.downloading');
                 }
-                return t('settings.update.downloadingPercent', { percent: updatePercent.value });
+                return t('settings.update.downloadingPercent', {
+                    percent: updatePercent.value,
+                });
             case 'ready':
                 return t('settings.update.ready');
             case 'error':
@@ -196,7 +200,7 @@
         </div>
 
         <div class="settings-layout">
-            <nav class="settings-nav" role="tablist" :aria-label="t('settings.title')">
+            <nav class="settings-nav" :aria-label="t('settings.title')">
                 <button
                     v-for="entry in settingsTabs"
                     :key="entry.key"
@@ -578,8 +582,7 @@
 
                         <div class="settings-meta-grid">
                             <article>
-                                <span>{{ t('settings.labels.logCount') }}</span
-                                ><strong>{{ developerLogCount }}</strong>
+                                <span>{{ t('settings.labels.logCount') }}</span><strong>{{ developerLogCount }}</strong>
                             </article>
                             <article>
                                 <span>{{ t('settings.labels.logFilePath') }}</span
@@ -615,7 +618,7 @@
                         <h4>{{ t('settings.sections.about') }}</h4>
                         <div class="settings-about-card">
                             <div class="settings-about-brand">
-                                <img :src="appMark" alt="InvestGo" />
+                                <img :src="appMark" alt="InvestGo">
                             </div>
                             <div class="settings-about-summary">
                                 <div class="settings-about-heading">
@@ -684,7 +687,7 @@
                             <div v-if="updateActive" class="settings-update-progress">
                                 <div
                                     class="settings-update-progress-bar"
-                                    :style="{ width: (updatePercent ?? 0) + '%' }"
+                                    :style="{ width: `${updatePercent ?? 0}%` }"
                                 ></div>
                             </div>
                             <div class="settings-update-actions">
@@ -759,7 +762,7 @@
         border: 1px solid transparent;
         background: transparent;
         color: var(--muted);
-        font: 600 12px/1 var(--font-ui);
+        font: 600 12px / 1 var(--font-ui);
         text-align: center;
         cursor: pointer;
         transition:
@@ -821,7 +824,7 @@
     .settings-section h4 {
         margin: 0;
         color: var(--ink);
-        font: 700 14px/1.2 var(--font-display);
+        font: 700 14px / 1.2 var(--font-display);
         letter-spacing: 0.01em;
     }
 
@@ -974,16 +977,6 @@
         gap: 5px;
     }
 
-    .settings-meta-grid article span {
-        font-size: 11px;
-        color: var(--muted);
-    }
-
-    .settings-meta-grid article strong {
-        font-size: 13px;
-        word-break: break-word;
-    }
-
     .settings-meta-grid .full-span {
         grid-column: 1 / -1;
     }
@@ -1068,22 +1061,22 @@
         font-weight: 700;
     }
 
-    .developer-log-entry[data-level='error'] .developer-log-level {
+    .developer-log-entry[data-level="error"] .developer-log-level {
         background: rgba(209, 67, 67, 0.14);
         color: var(--rise);
     }
 
-    .developer-log-entry[data-level='warn'] .developer-log-level {
+    .developer-log-entry[data-level="warn"] .developer-log-level {
         background: rgba(217, 119, 6, 0.14);
         color: var(--warn);
     }
 
-    .developer-log-entry[data-level='info'] .developer-log-level {
+    .developer-log-entry[data-level="info"] .developer-log-level {
         background: var(--accent-soft);
         color: var(--accent-strong);
     }
 
-    .developer-log-entry[data-level='debug'] .developer-log-level {
+    .developer-log-entry[data-level="debug"] .developer-log-level {
         background: rgba(15, 23, 42, 0.08);
         color: var(--muted);
     }
@@ -1093,9 +1086,9 @@
         white-space: pre-wrap;
         word-break: break-word;
         font:
-            12px/1.6 'SF Mono',
-            'JetBrains Mono',
-            'Menlo',
+            12px / 1.6 "SF Mono",
+            "JetBrains Mono",
+            "Menlo",
             monospace;
         color: var(--ink);
     }
@@ -1223,6 +1216,21 @@
         font-size: 14px;
     }
 
+    .settings-meta-grid article span {
+        font-size: 11px;
+        color: var(--muted);
+    }
+
+    .settings-section label span {
+        font-size: 11px;
+        color: var(--muted);
+    }
+
+    .settings-meta-grid article strong {
+        font-size: 13px;
+        word-break: break-word;
+    }
+
     .settings-disclaimer-card p {
         margin: 0;
         color: var(--muted);
@@ -1237,7 +1245,7 @@
         gap: 8px 12px;
         margin-top: 12px;
         color: var(--muted);
-        font: 400 12px/1.5 var(--font-ui);
+        font: 400 12px / 1.5 var(--font-ui);
     }
 
     .settings-update-state {
@@ -1270,13 +1278,13 @@
     .settings-update-error {
         margin: 8px 0 0;
         color: var(--fall);
-        font: 400 12px/1.5 var(--font-ui);
+        font: 400 12px / 1.5 var(--font-ui);
     }
 
     .settings-update-note {
         margin: 0;
         color: var(--muted);
-        font: 400 12px/1.5 var(--font-ui);
+        font: 400 12px / 1.5 var(--font-ui);
     }
 
     @media (max-width: 1180px) {

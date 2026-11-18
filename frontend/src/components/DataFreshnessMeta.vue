@@ -1,7 +1,7 @@
 <script setup lang="ts">
-    import { ref } from 'vue';
     import Button from 'primevue/button';
     import Popover, { type PopoverMethods } from 'primevue/popover';
+    import { ref } from 'vue';
 
     import { useI18n } from '../i18n';
 
@@ -95,7 +95,7 @@
     .data-freshness-row strong {
         min-width: 0;
         overflow-wrap: anywhere;
-        font: 500 12px/1.4 var(--font-ui);
+        font: 500 12px / 1.4 var(--font-ui);
         color: var(--ink);
         text-align: right;
     }

@@ -1,8 +1,8 @@
 <script setup lang="ts">
-    import { computed, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue';
     import Button from 'primevue/button';
     import Message from 'primevue/message';
     import ProgressSpinner from 'primevue/progressspinner';
+    import { computed, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue';
 
     import { api } from './api';
     import AppShell from './components/AppShell.vue';
@@ -12,15 +12,15 @@
     import DCADetailDialog from './components/dialogs/DCADetailDialog.vue';
     import ItemDialog from './components/dialogs/ItemDialog.vue';
     import UpdateDialog from './components/dialogs/UpdateDialog.vue';
-    import { appendClientLog, installClientLogCapture } from './devlog';
+    import { useAlertDialog } from './composables/useAlertDialog';
+    import { useConfirmDialog } from './composables/useConfirmDialog';
     import { useDCALedger } from './composables/useDCALedger';
     import { useDeveloperLogs } from './composables/useDeveloperLogs';
     import { useHistorySeries } from './composables/useHistorySeries';
     import { useItemDialog } from './composables/useItemDialog';
-    import { useAlertDialog } from './composables/useAlertDialog';
-    import { useConfirmDialog } from './composables/useConfirmDialog';
-    import { defaultSettings, maxHotCacheTTLSeconds, minHotCacheTTLSeconds, normaliseSettings } from './forms';
+    import { appendClientLog, installClientLogCapture } from './devlog';
     import { setFormatterSettings } from './format';
+    import { defaultSettings, maxHotCacheTTLSeconds, minHotCacheTTLSeconds, normaliseSettings } from './forms';
     import { setI18nLocale, translate } from './i18n';
     import { applyPrimeVueColorTheme } from './theme';
     import type {
@@ -468,15 +468,13 @@
         performDeleteItem: performDeleteItemInner,
     } = useItemDialog(applySnapshot, clearHistoryCache, setStatus);
 
-    const {
-        dcaLedgerVisible,
-        dcaLedgerItem,
-        savingDCAEntries,
-        openDCALedger,
-        saveDCAEntries,
-    } = useDCALedger(applySnapshot, clearHistoryCache, setStatus);
+    const { dcaLedgerVisible, dcaLedgerItem, savingDCAEntries, openDCALedger, saveDCAEntries } = useDCALedger(
+        applySnapshot,
+        clearHistoryCache,
+        setStatus,
+    );
 
-    async function quickAddHotItem(item: HotItem): Promise<void> {
+    async function _quickAddHotItem(item: HotItem): Promise<void> {
         const key = `${item.market}:${item.symbol}`;
         await quickAddHotItemInner(item, trackedHotKeys.value.includes(key));
     }
@@ -685,7 +683,7 @@
 
     .app-startup-title {
         color: var(--ink);
-        font: 600 16px/1.2 var(--font-display);
+        font: 600 16px / 1.2 var(--font-display);
     }
 
     .app-startup-detail {

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-    import { computed } from 'vue';
     import Button from 'primevue/button';
     import Tag from 'primevue/tag';
+    import { computed } from 'vue';
 
     import { formatDateTime, formatUnitPrice } from '../../format';
     import { useI18n } from '../../i18n';
@@ -88,14 +88,14 @@
                 </div>
                 <div class="alert-actions">
                     <span>{{ t('alerts.updatedAt', { time: formatDateTime(alert.updatedAt) }) }}</span>
-                    <div class="action-stack table-action-stack" @click.stop>
+                    <div class="action-stack table-action-stack">
                         <Button
                             size="small"
                             text
                             rounded
                             icon="pi pi-pencil"
                             :aria-label="t('alerts.aria.edit')"
-                            @click="$emit('edit-alert', alert)"
+                            @click.stop="$emit('edit-alert', alert)"
                         />
                         <Button
                             size="small"
@@ -104,7 +104,7 @@
                             severity="danger"
                             icon="pi pi-trash"
                             :aria-label="t('alerts.aria.delete')"
-                            @click="$emit('delete-alert', alert.id)"
+                            @click.stop="$emit('delete-alert', alert.id)"
                         />
                     </div>
                 </div>
@@ -180,8 +180,8 @@
         margin-bottom: 4px;
     }
 
-    .alert-head > div > span,
-    .alert-actions > span {
+    .alert-actions > span,
+    .alert-head > div > span {
         color: var(--muted);
         font-size: 11px;
     }

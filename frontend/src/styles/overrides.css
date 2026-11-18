@@ -6,7 +6,7 @@
 
 .p-dialog.desk-dialog {
     border-radius: var(--radius-shell);
-    overflow: hidden !important;
+    overflow: hidden;
     border: 1px solid var(--border);
     background: var(--panel-strong);
     background-clip: padding-box;
@@ -21,7 +21,7 @@
 
 .p-dialog.desk-dialog .p-dialog-title {
     margin: 0;
-    font: 600 13px/1.25 var(--font-display);
+    font: 600 13px / 1.25 var(--font-display);
     letter-spacing: -0.015em;
     color: var(--ink);
 }

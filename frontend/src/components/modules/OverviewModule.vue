@@ -1,17 +1,16 @@
 <script setup lang="ts">
-    import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue';
     import { color } from 'chart.js/helpers';
-    import Chart from 'primevue/chart';
     import Button from 'primevue/button';
+    import Chart from 'primevue/chart';
     import Message from 'primevue/message';
     import Skeleton from 'primevue/skeleton';
-
-    import DataFreshnessMeta from '../DataFreshnessMeta.vue';
-    import SummaryStrip from '../SummaryStrip.vue';
-    import { api, ApiAbortError } from '../../api';
+    import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue';
+    import { ApiAbortError, api } from '../../api';
     import { formatDateTime, formatMoney, formatNumber, resolvedLocale } from '../../format';
     import { useI18n } from '../../i18n';
     import type { DashboardSummary, OverviewAnalytics } from '../../types';
+    import DataFreshnessMeta from '../DataFreshnessMeta.vue';
+    import SummaryStrip from '../SummaryStrip.vue';
 
     const props = defineProps<{
         dashboard: DashboardSummary | null;
@@ -22,9 +21,7 @@
         marketDataError: string;
     }>();
 
-    defineEmits<{
-        (event: 'refresh'): void;
-    }>();
+    defineEmits<(event: 'refresh') => void>();
 
     const { t } = useI18n();
 
@@ -109,7 +106,10 @@
                 { label: t('overview.meta.generatedAt'), value: generatedAt },
                 { label: t('common.cacheState'), value: cacheSummary.value },
                 { label: t('common.cacheExpiresAt'), value: cacheExpiresAt },
-                { label: t('overview.meta.displayCurrency'), value: current.displayCurrency },
+                {
+                    label: t('overview.meta.displayCurrency'),
+                    value: current.displayCurrency,
+                },
             ],
         };
     });
@@ -217,7 +217,11 @@
                         },
                         labelColor(context: { dataset: { borderColor: string } }) {
                             const color = context.dataset.borderColor as string;
-                            return { borderColor: color, backgroundColor: color, borderWidth: 0 };
+                            return {
+                                borderColor: color,
+                                backgroundColor: color,
+                                borderWidth: 0,
+                            };
                         },
                         label(context: { dataset: { label: string }; parsed: { y: number } }) {
                             return `  ${context.dataset.label}    ${formatMoney(context.parsed.y ?? 0)}`;
@@ -379,7 +383,7 @@
                 <div class="overview-loading-card">
                     <Skeleton width="8rem" height="1rem" />
                     <div class="overview-loading-breakdown">
-                        <Skeleton width="100%" height="1.4rem" borderRadius="999px" />
+                        <Skeleton width="100%" height="1.4rem" border-radius="999px" />
                         <div class="overview-loading-list">
                             <Skeleton v-for="index in 4" :key="index" width="100%" height="2.5rem" />
                         </div>
@@ -559,7 +563,7 @@
 
     .overview-head h4 {
         margin: 0;
-        font: 600 14px/1.1 var(--font-display);
+        font: 600 14px / 1.1 var(--font-display);
     }
 
     .overview-breakdown {
@@ -586,7 +590,7 @@
     }
 
     .overview-share-total strong {
-        font: 600 20px/1.05 var(--font-display);
+        font: 600 20px / 1.05 var(--font-display);
         letter-spacing: -0.03em;
         font-variant-numeric: tabular-nums;
     }
@@ -619,8 +623,10 @@
         overflow-y: auto;
         overflow-x: hidden;
         min-height: calc(
-            var(--overview-visible-rows) * var(--overview-row-block) + (var(--overview-visible-rows) - 1) *
-                var(--overview-list-gap)
+            var(--overview-visible-rows) *
+            var(--overview-row-block) +
+            (var(--overview-visible-rows) - 1) *
+            var(--overview-list-gap)
         );
         min-width: 0;
         align-content: start;
@@ -706,10 +712,10 @@
     }
 
     .overview-trend-chart :deep(canvas) {
-        width: 100% !important;
-        height: 100% !important;
-        max-width: 100% !important;
-        max-height: 100% !important;
+        width: 100%;
+        height: 100%;
+        max-width: 100%;
+        max-height: 100%;
         display: block;
     }
 

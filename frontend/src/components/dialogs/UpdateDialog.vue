@@ -1,9 +1,9 @@
 <script setup lang="ts">
-    import { computed, onMounted, onUnmounted, ref } from 'vue';
     import Button from 'primevue/button';
     import Dialog from 'primevue/dialog';
     import Message from 'primevue/message';
     import ProgressBar from 'primevue/progressbar';
+    import { computed, onMounted, onUnmounted, ref } from 'vue';
     import { api } from '../../api';
     import { useI18n } from '../../i18n';
     import type { UpdateStatus } from '../../types';

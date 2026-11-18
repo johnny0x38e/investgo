@@ -9,7 +9,17 @@ export type DeveloperLogLevel = 'debug' | 'info' | 'warn' | 'error';
 export type DeveloperLogSource = 'backend' | 'frontend' | 'system';
 export type ThemeMode = 'system' | 'light' | 'dark';
 export type ColorTheme =
-    'blue' | 'graphite' | 'forest' | 'sunset' | 'rose' | 'violet' | 'amber' | 'ocean' | 'mint' | 'coral' | 'indigo';
+    | 'blue'
+    | 'graphite'
+    | 'forest'
+    | 'sunset'
+    | 'rose'
+    | 'violet'
+    | 'amber'
+    | 'ocean'
+    | 'mint'
+    | 'coral'
+    | 'indigo';
 
 // Unified market types conforming to exchange conventions
 export type MarketType =
@@ -142,7 +152,14 @@ export interface AppSettings {
 }
 
 export type UpdateState =
-    'unconfigured' | 'idle' | 'checking' | 'up-to-date' | 'available' | 'downloading' | 'ready' | 'error';
+    | 'unconfigured'
+    | 'idle'
+    | 'checking'
+    | 'up-to-date'
+    | 'available'
+    | 'downloading'
+    | 'ready'
+    | 'error';
 
 export interface UpdateProgress {
     written: number;

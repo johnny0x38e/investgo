@@ -3,10 +3,10 @@ import type {
     AlertCondition,
     AppSettings,
     ColorTheme,
+    HistoryInterval,
     HotCategory,
     HotMarketGroup,
     HotSort,
-    HistoryInterval,
     MarketType,
     ModuleTab,
     OptionItem,
@@ -19,9 +19,21 @@ export const projectMeta = {
 
 export function getModuleTabs(): ModuleTab[] {
     return [
-        { key: 'overview', label: translate('modules.overview'), icon: 'pi pi-home' },
-        { key: 'watchlist', label: translate('modules.watchlist'), icon: 'pi pi-chart-line' },
-        { key: 'holdings', label: translate('modules.holdings'), icon: 'pi pi-wallet' },
+        {
+            key: 'overview',
+            label: translate('modules.overview'),
+            icon: 'pi pi-home',
+        },
+        {
+            key: 'watchlist',
+            label: translate('modules.watchlist'),
+            icon: 'pi pi-chart-line',
+        },
+        {
+            key: 'holdings',
+            label: translate('modules.holdings'),
+            icon: 'pi pi-wallet',
+        },
         { key: 'hot', label: translate('modules.hot'), icon: 'pi pi-bolt' },
         { key: 'alerts', label: translate('modules.alerts'), icon: 'pi pi-bell' },
     ];

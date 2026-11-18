@@ -3,6 +3,7 @@
 
     import { formatDateTime } from '../format';
     import { useI18n } from '../i18n';
+    import type { StatusTone } from '../types';
     import {
         closeWindow,
         isWindowMaximised,
@@ -12,7 +13,6 @@
         startWindowDrag,
         toggleMaximiseWindow,
     } from '../wails-runtime';
-    import type { StatusTone } from '../types';
 
     defineProps<{
         statusText: string;
@@ -136,6 +136,7 @@
 </script>
 
 <template>
+    <!-- biome-ignore lint/a11y/noStaticElementInteractions: custom title bar uses mouse events for window drag and double-click maximize -->
     <header
         class="window-bar"
         @mousedown="handleBarMouseDown"
@@ -252,15 +253,15 @@
         opacity: 0.7;
     }
 
-    .window-status[data-tone='error'] .window-status-text {
+    .window-status[data-tone="error"] .window-status-text {
         color: var(--fall);
     }
 
-    .window-status[data-tone='warn'] .window-status-text {
+    .window-status[data-tone="warn"] .window-status-text {
         color: var(--warn);
     }
 
-    .window-status[data-tone='success'] .window-status-text {
+    .window-status[data-tone="success"] .window-status-text {
         color: var(--accent);
     }
 

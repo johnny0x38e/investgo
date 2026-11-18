@@ -1,11 +1,7 @@
 <script setup lang="ts">
-    import { computed, onActivated, onBeforeUnmount, onDeactivated, onMounted, ref, watch } from 'vue';
     import Button from 'primevue/button';
     import InputText from 'primevue/inputtext';
-    import Tag from 'primevue/tag';
-
-    import DataFreshnessMeta from '../DataFreshnessMeta.vue';
-    import PoolManagerDialog from '../dialogs/PoolManagerDialog.vue';
+    import { computed, onActivated, onBeforeUnmount, onDeactivated, onMounted, ref, watch } from 'vue';
     import { ApiAbortError, api } from '../../api';
     import { getHotCategoryOptions } from '../../constants';
     import {
@@ -18,6 +14,8 @@
     } from '../../format';
     import { useI18n } from '../../i18n';
     import type { HotCategory, HotItem, HotListResponse, HotMarketGroup } from '../../types';
+    import DataFreshnessMeta from '../DataFreshnessMeta.vue';
+    import PoolManagerDialog from '../dialogs/PoolManagerDialog.vue';
 
     type SortField = 'volume' | 'changePercent' | 'marketCap' | 'currentPrice' | null;
     type SortDirection = 'asc' | 'desc';
@@ -69,9 +67,14 @@
         const dir = sortDirection.value === 'asc' ? 1 : -1;
 
         // Apply a secondary sort on the client while the backend remains responsible for pagination and baseline filtering.
+        const field = sortField.value;
+        if (!field) {
+            return result;
+        }
+
         return result.sort((a, b) => {
-            const valA = a[sortField.value!] as number;
-            const valB = b[sortField.value!] as number;
+            const valA = a[field] as number;
+            const valB = b[field] as number;
             return (valA - valB) * dir;
         });
     });
@@ -115,7 +118,10 @@
                 { label: t('common.updatedAt'), value: updatedAt },
                 { label: t('common.cacheState'), value: cacheSummary.value },
                 { label: t('common.cacheExpiresAt'), value: cacheExpires },
-                { label: t('common.results'), value: `${items.value.length} / ${total.value}` },
+                {
+                    label: t('common.results'),
+                    value: `${items.value.length} / ${total.value}`,
+                },
             ],
         };
     });
@@ -494,7 +500,9 @@
                                     :class="
                                         item.changePercent > 0 ? 'tone-rise' : item.changePercent < 0 ? 'tone-fall' : ''
                                     "
-                                    >{{ formatPercent(item.changePercent) }}</strong
+                                    >{{
+                                        formatPercent(item.changePercent)
+                                    }}</strong
                                 >
                                 <span :class="item.change > 0 ? 'tone-rise' : item.change < 0 ? 'tone-fall' : ''">{{
                                     formatCurrencyAmount(item.change, item.currency, true)
@@ -514,7 +522,7 @@
                             </div>
                         </td>
                         <td class="table-action-cell hot-table-sticky hot-table-sticky-actions">
-                            <div class="action-stack table-action-stack" @click.stop>
+                            <div class="action-stack table-action-stack">
                                 <template v-if="isTracked(item)">
                                     <Button
                                         size="small"
@@ -525,7 +533,7 @@
                                         style="color: var(--accent)"
                                         :aria-label="t('hot.unwatchItem')"
                                         :title="t('hot.unwatchItem')"
-                                        @click="$emit('unwatch-item', item)"
+                                        @click.stop="$emit('unwatch-item', item)"
                                     />
                                 </template>
                                 <template v-else>
@@ -537,7 +545,7 @@
                                         class="hot-watch-button"
                                         :aria-label="t('hot.watchItem')"
                                         :title="t('hot.watchItem')"
-                                        @click="$emit('watch-item', item)"
+                                        @click.stop="$emit('watch-item', item)"
                                     />
                                     <Button
                                         size="small"
@@ -547,7 +555,7 @@
                                         class="hot-position-button"
                                         :aria-label="t('hot.openPosition')"
                                         :title="t('hot.openPosition')"
-                                        @click="$emit('open-position', item)"
+                                        @click.stop="$emit('open-position', item)"
                                     />
                                 </template>
                             </div>
@@ -570,11 +578,7 @@
             </div>
         </div>
 
-        <PoolManagerDialog
-            v-model:visible="managePoolsVisible"
-            :market-group="marketGroup"
-            @changed="onPoolChanged"
-        />
+        <PoolManagerDialog v-model:visible="managePoolsVisible" :market-group="marketGroup" @changed="onPoolChanged" />
     </section>
 </template>
 
@@ -636,7 +640,7 @@
         border: 1px solid transparent;
         background: transparent;
         color: var(--muted);
-        font: 600 12px/1 var(--font-ui);
+        font: 600 12px / 1 var(--font-ui);
         cursor: pointer;
         transition:
             background 140ms ease,

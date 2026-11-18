@@ -19,7 +19,7 @@
     width: 100%;
 }
 
-.form-grid input[type='date'] {
+.form-grid input[type="date"] {
     width: 100%;
     height: var(--control-height);
     min-height: var(--control-height);
@@ -34,11 +34,11 @@
     color-scheme: light dark;
 }
 
-.form-grid input[type='date']:hover {
+.form-grid input[type="date"]:hover {
     background: var(--control-bg-hover);
 }
 
-.form-grid input[type='date']:focus {
+.form-grid input[type="date"]:focus {
     border-color: color-mix(in srgb, var(--accent) 44%, var(--border-strong));
     box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent);
 }

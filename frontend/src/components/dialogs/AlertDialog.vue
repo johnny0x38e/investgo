@@ -1,11 +1,11 @@
 <script setup lang="ts">
-    import { computed } from 'vue';
     import Button from 'primevue/button';
     import Checkbox from 'primevue/checkbox';
     import Dialog from 'primevue/dialog';
     import InputNumber from 'primevue/inputnumber';
     import InputText from 'primevue/inputtext';
     import Select from 'primevue/select';
+    import { computed } from 'vue';
 
     import { getAlertConditionOptions } from '../../constants';
     import { useI18n } from '../../i18n';

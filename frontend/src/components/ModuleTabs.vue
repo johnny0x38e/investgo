@@ -1,17 +1,14 @@
 <script setup lang="ts">
     import { computed } from 'vue';
-
-    import { appendClientLog } from '../devlog';
     import { getModuleTabs } from '../constants';
+    import { appendClientLog } from '../devlog';
     import type { ModuleKey } from '../types';
 
     defineProps<{
         activeModule: ModuleKey;
     }>();
 
-    const emit = defineEmits<{
-        (event: 'switch', value: ModuleKey): void;
-    }>();
+    const emit = defineEmits<(event: 'switch', value: ModuleKey) => void>();
 
     const moduleTabs = computed(() => getModuleTabs());
 

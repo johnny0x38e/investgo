@@ -1,0 +1,130 @@
+[
+    {
+        "label": "investgo: Install dependencies",
+        "command": "just",
+        "args": ["install"],
+        "cwd": "$ZED_WORKTREE_ROOT"
+    },
+    {
+        "label": "investgo: Dev server",
+        "command": "just",
+        "args": ["dev"],
+        "cwd": "$ZED_WORKTREE_ROOT",
+        "use_new_terminal": true,
+        "allow_concurrent_runs": false
+    },
+    {
+        "label": "investgo: Typecheck frontend",
+        "command": "just",
+        "args": ["typecheck"],
+        "cwd": "$ZED_WORKTREE_ROOT"
+    },
+    {
+        "label": "investgo: Format",
+        "command": "just",
+        "args": ["fmt"],
+        "cwd": "$ZED_WORKTREE_ROOT"
+    },
+    {
+        "label": "investgo: Lint",
+        "command": "just",
+        "args": ["lint"],
+        "cwd": "$ZED_WORKTREE_ROOT"
+    },
+    {
+        "label": "investgo: Lint fix",
+        "command": "just",
+        "args": ["lint-fix"],
+        "cwd": "$ZED_WORKTREE_ROOT"
+    },
+    {
+        "label": "investgo: Build frontend",
+        "command": "just",
+        "args": ["build-frontend"],
+        "cwd": "$ZED_WORKTREE_ROOT"
+    },
+    {
+        "label": "investgo: Prepare embeds",
+        "command": "just",
+        "args": ["prepare-embeds"],
+        "cwd": "$ZED_WORKTREE_ROOT"
+    },
+    {
+        "label": "investgo: Test",
+        "command": "just",
+        "args": ["test"],
+        "cwd": "$ZED_WORKTREE_ROOT"
+    },
+    {
+        "label": "investgo: Check",
+        "command": "just",
+        "args": ["check"],
+        "cwd": "$ZED_WORKTREE_ROOT"
+    },
+    {
+        "label": "investgo: Render app icon",
+        "command": "just",
+        "args": ["icon"],
+        "cwd": "$ZED_WORKTREE_ROOT"
+    },
+    {
+        "label": "investgo: Build macOS Apple Silicon",
+        "command": "just",
+        "args": ["build-darwin-aarch64"],
+        "cwd": "$ZED_WORKTREE_ROOT"
+    },
+    {
+        "label": "investgo: Build macOS Apple Silicon (DevTools)",
+        "command": "just",
+        "args": ["build-darwin-aarch64", "--dev"],
+        "cwd": "$ZED_WORKTREE_ROOT"
+    },
+    {
+        "label": "investgo: Build macOS Intel",
+        "command": "just",
+        "args": ["build-darwin-x86_64"],
+        "cwd": "$ZED_WORKTREE_ROOT"
+    },
+    {
+        "label": "investgo: Build macOS Intel (DevTools)",
+        "command": "just",
+        "args": ["build-darwin-x86_64", "--dev"],
+        "cwd": "$ZED_WORKTREE_ROOT"
+    },
+    {
+        "label": "investgo: Package macOS Apple Silicon DMG",
+        "command": "just",
+        "args": ["package-darwin-aarch64"],
+        "cwd": "$ZED_WORKTREE_ROOT"
+    },
+    {
+        "label": "investgo: Package macOS Apple Silicon DMG (DevTools)",
+        "command": "just",
+        "args": ["package-darwin-aarch64", "--dev"],
+        "cwd": "$ZED_WORKTREE_ROOT"
+    },
+    {
+        "label": "investgo: Package macOS Intel DMG",
+        "command": "just",
+        "args": ["package-darwin-x86_64"],
+        "cwd": "$ZED_WORKTREE_ROOT"
+    },
+    {
+        "label": "investgo: Package macOS Intel DMG (DevTools)",
+        "command": "just",
+        "args": ["package-darwin-x86_64", "--dev"],
+        "cwd": "$ZED_WORKTREE_ROOT"
+    },
+    {
+        "label": "investgo: Build Windows amd64",
+        "command": "just",
+        "args": ["build-windows-amd64"],
+        "cwd": "$ZED_WORKTREE_ROOT"
+    },
+    {
+        "label": "investgo: Build Windows amd64 (DevTools)",
+        "command": "just",
+        "args": ["build-windows-amd64", "-Dev"],
+        "cwd": "$ZED_WORKTREE_ROOT"
+    }
+]

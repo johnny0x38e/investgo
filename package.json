@@ -6,7 +6,11 @@
     "scripts": {
         "dev": "vite",
         "build": "vite build",
-        "typecheck": "vue-tsc --noEmit"
+        "typecheck": "vue-tsc --noEmit",
+        "format": "biome format --write .",
+        "format:check": "biome format .",
+        "lint": "biome check .",
+        "lint:fix": "biome check --write ."
     },
     "dependencies": {
         "@primeuix/themes": "^2.0.3",
@@ -16,6 +20,7 @@
         "vue": "^3.5.32"
     },
     "devDependencies": {
+        "@biomejs/biome": "^2.6.8",
         "@vitejs/plugin-vue": "^6.0.5",
         "typescript": "^6.0.2",
         "vite": "^8.0.7",

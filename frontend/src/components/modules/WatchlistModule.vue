@@ -1,8 +1,6 @@
 <script setup lang="ts">
-    import { computed } from 'vue';
     import Button from 'primevue/button';
-    import DataFreshnessMeta from '../DataFreshnessMeta.vue';
-    import PriceChart from '../PriceChart.vue';
+    import { computed } from 'vue';
     import { getHistoryRangeOptions } from '../../constants';
     import {
         formatDateTime,
@@ -14,6 +12,8 @@
     } from '../../format';
     import { useI18n } from '../../i18n';
     import type { HistoryInterval, HistorySeries, MarketMetricCard, WatchlistItem } from '../../types';
+    import DataFreshnessMeta from '../DataFreshnessMeta.vue';
+    import PriceChart from '../PriceChart.vue';
 
     const props = defineProps<{
         selectedItem: WatchlistItem | null;
@@ -107,7 +107,10 @@
                 { label: t('watchlist.meta.chartSourceLabel'), value: chartSource },
                 { label: t('watchlist.meta.syncedAtLabel'), value: syncedAt },
                 { label: t('watchlist.meta.cacheLabel'), value: cacheState },
-                { label: t('watchlist.meta.cacheFreshUntilLabel'), value: cacheExpiresAt },
+                {
+                    label: t('watchlist.meta.cacheFreshUntilLabel'),
+                    value: cacheExpiresAt,
+                },
             ],
             tone: snapshot.changeTone,
         };
@@ -216,10 +219,7 @@
                         </div>
 
                         <h4>{{ marketOverview.title }}</h4>
-                        <p class="market-hero-subline">
-                            {{ marketOverview.market }} ·
-                            {{ marketOverview.symbol }}
-                        </p>
+                        <p class="market-hero-subline">{{ marketOverview.market }} · {{ marketOverview.symbol }}</p>
 
                         <div class="market-hero-main">
                             <strong class="market-hero-price">{{ marketOverview.price }}</strong>
@@ -363,7 +363,7 @@
     }
 
     .market-hero h4 {
-        font: 600 15px/1.2 var(--font-display);
+        font: 600 15px / 1.2 var(--font-display);
         color: var(--ink);
         overflow: hidden;
         text-overflow: ellipsis;
@@ -449,6 +449,24 @@
         flex-wrap: wrap;
     }
 
+    .interval-pill {
+        min-height: 28px;
+        padding: 0 10px;
+        border-radius: 999px;
+        border: 1px solid transparent;
+        background: transparent;
+        color: var(--muted);
+        font: 600 12px / 1 var(--font-ui);
+        cursor: pointer;
+    }
+
+    .interval-pill.active {
+        color: var(--ink);
+        border-color: var(--border);
+        background: var(--panel-strong);
+        box-shadow: var(--shadow-soft);
+    }
+
     .market-hero-intervals .interval-pill {
         min-height: 32px;
         min-width: 52px;
@@ -466,24 +484,6 @@
         margin-top: auto;
         padding-top: 14px;
         min-width: 0;
-    }
-
-    .interval-pill {
-        min-height: 28px;
-        padding: 0 10px;
-        border-radius: 999px;
-        border: 1px solid transparent;
-        background: transparent;
-        color: var(--muted);
-        font: 600 12px/1 var(--font-ui);
-        cursor: pointer;
-    }
-
-    .interval-pill.active {
-        color: var(--ink);
-        border-color: var(--border);
-        background: var(--panel-strong);
-        box-shadow: var(--shadow-soft);
     }
 
     .market-metrics {
@@ -590,13 +590,13 @@
     }
 
     .market-pos-value {
-        font: 500 15px/1.2 var(--font-display);
+        font: 500 15px / 1.2 var(--font-display);
         color: var(--ink);
         letter-spacing: -0.01em;
     }
 
     .market-pos-pnl {
-        font: 500 15px/1.2 var(--font-display);
+        font: 500 15px / 1.2 var(--font-display);
         color: var(--ink);
         letter-spacing: -0.01em;
     }
@@ -624,7 +624,7 @@
     }
 
     .market-pos-detail-val {
-        font: 500 13px/1.3 var(--font-display);
+        font: 500 13px / 1.3 var(--font-display);
         color: var(--ink);
     }
 

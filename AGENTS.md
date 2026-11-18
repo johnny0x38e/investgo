@@ -17,13 +17,14 @@ Add Go tests beside the package under test using `*_test.go`.
 
 ## Build, Test, and Development Commands
 
-Requirements are Node.js 22.13+, pnpm 11+, and Go 1.27+.
+Requirements are Node.js 22.13+, pnpm 11+, and Go 1.27+. Prefer `just <recipe>`
+(see `justfile` and `.zed/tasks.json`) for the common local workflows below.
 
-- `pnpm install` installs frontend dependencies.
-- `pnpm dev` starts the Vite frontend development server.
-- `pnpm typecheck` runs `vue-tsc` in strict mode; `pnpm build` builds the frontend.
-- `go test ./...` compiles every package, including `main.go`. Prepare the
-  embeds first, matching CI:
+- `just install` / `pnpm install` installs frontend dependencies.
+- `just dev` / `pnpm dev` starts the Vite frontend development server.
+- `just typecheck` / `pnpm typecheck` runs `vue-tsc` in strict mode;
+  `just build-frontend` / `pnpm build` builds the frontend.
+- `just test` prepares embeds then runs `go test ./...`, matching CI:
 
 ```bash
 mkdir -p build
@@ -49,9 +50,10 @@ helps if that commit already contains the workflow and packaging fixes.
 
 Local packaging is optional and writes to `build/bin/`:
 
-- `VERSION=1.0.0 ./scripts/package-darwin-aarch64.sh` or
-  `./scripts/package-darwin-x86_64.sh`
-- `.\scripts\build-windows-amd64.ps1` on Windows
+- `VERSION=1.0.0 just package-darwin-aarch64` or
+  `VERSION=1.0.0 just package-darwin-x86_64`
+  (same as the scripts under `scripts/`)
+- `just build-windows-amd64` / `.\scripts\build-windows-amd64.ps1` on Windows
 
 macOS desktop builds pass `-tags private_mac_apis`. Wails v3 beta.19 and later
 compile Liquid Glass webview transparency and `OpenDevTools` as no-ops unless
@@ -66,10 +68,11 @@ does not need it: the window tests only check option values.
 ## Coding Style and Naming
 
 Run `gofmt` on Go changes and use idiomatic Go naming. For Vue/TypeScript,
-follow `prettier.config.js`: four-space indentation, 120-column width,
-single quotes, trailing commas, and LF endings. Keep TypeScript strict and
-keep frontend API types synchronized with backend responses. Use lowercase
-Go package names, PascalCase exported Go symbols, and descriptive
+follow `biome.json`: four-space indentation, 120-column width, single
+quotes, trailing commas, and LF endings. Use `pnpm lint` / `pnpm lint:fix`
+for Biome check and safe fixes (including import sorting). Keep TypeScript
+strict and keep frontend API types synchronized with backend responses. Use
+lowercase Go package names, PascalCase exported Go symbols, and descriptive
 camelCase functions and variables in TypeScript.
 
 ## Testing Guidelines

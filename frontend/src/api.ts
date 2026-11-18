@@ -42,7 +42,9 @@ export async function api<T>(path: string, init?: ApiRequestInit): Promise<T> {
         if (externalSignal.aborted) {
             abortFromExternalSignal();
         } else {
-            externalSignal.addEventListener('abort', abortFromExternalSignal, { once: true });
+            externalSignal.addEventListener('abort', abortFromExternalSignal, {
+                once: true,
+            });
         }
     }
 
@@ -60,7 +62,9 @@ export async function api<T>(path: string, init?: ApiRequestInit): Promise<T> {
             const apiError = isApiErrorPayload(payload) ? payload : null;
             const errorMessage = apiError?.error || translate('api.requestFailed', { status: response.status });
             const debugMessage = apiError?.debugError || errorMessage;
-            const error = new Error(errorMessage) as Error & { debugMessage?: string };
+            const error = new Error(errorMessage) as Error & {
+                debugMessage?: string;
+            };
             error.debugMessage = debugMessage;
             throw error;
         }

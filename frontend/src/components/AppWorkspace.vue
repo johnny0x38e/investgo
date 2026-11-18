@@ -1,10 +1,4 @@
 <script setup lang="ts">
-    import AlertsModule from './modules/AlertsModule.vue';
-    import HotModule from './modules/HotModule.vue';
-    import HoldingsModule from './modules/HoldingsModule.vue';
-    import OverviewModule from './modules/OverviewModule.vue';
-    import SettingsModule from './modules/SettingsModule.vue';
-    import WatchlistModule from './modules/WatchlistModule.vue';
     import type {
         AlertRule,
         AppSettings,
@@ -19,6 +13,12 @@
         StateSnapshot,
         WatchlistItem,
     } from '../types';
+    import AlertsModule from './modules/AlertsModule.vue';
+    import HoldingsModule from './modules/HoldingsModule.vue';
+    import HotModule from './modules/HotModule.vue';
+    import OverviewModule from './modules/OverviewModule.vue';
+    import SettingsModule from './modules/SettingsModule.vue';
+    import WatchlistModule from './modules/WatchlistModule.vue';
 
     defineProps<{
         activeModule: ModuleKey;

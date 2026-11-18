@@ -218,15 +218,17 @@ export function mapItemToForm(item: WatchlistItem): ItemFormModel {
         tagsText: item.tags.join(', '),
         thesis: item.thesis,
         currentPrice: item.currentPrice,
-        dcaEntries: (item.dcaEntries ?? []).map((e): DCAEntryRow => ({
-            id: e.id,
-            date: isoDateToInputValue(e.date),
-            amount: e.amount,
-            shares: e.shares,
-            price: e.price && e.price > 0 ? e.price : null,
-            fee: e.fee && e.fee > 0 ? e.fee : null,
-            note: e.note ?? '',
-        })),
+        dcaEntries: (item.dcaEntries ?? []).map(
+            (e): DCAEntryRow => ({
+                id: e.id,
+                date: isoDateToInputValue(e.date),
+                amount: e.amount,
+                shares: e.shares,
+                price: e.price && e.price > 0 ? e.price : null,
+                fee: e.fee && e.fee > 0 ? e.fee : null,
+                note: e.note ?? '',
+            }),
+        ),
     };
 }
 
@@ -261,7 +263,7 @@ export function serialiseItemForm(form: ItemFormModel): Omit<
         currency: form.currency,
         quantity: form.quantity || 0,
         costPrice: form.costPrice || 0,
-        acquiredAt: form.acquiredAt ? new Date(form.acquiredAt + 'T00:00:00Z').toISOString() : undefined,
+        acquiredAt: form.acquiredAt ? new Date(`${form.acquiredAt}T00:00:00Z`).toISOString() : undefined,
         thesis: form.thesis,
         tags: form.tagsText
             .split(',')
@@ -269,15 +271,17 @@ export function serialiseItemForm(form: ItemFormModel): Omit<
             .filter(Boolean),
         dcaEntries: form.dcaEntries
             .filter((e) => (e.amount ?? 0) > 0 && (e.shares ?? 0) > 0)
-            .map((e): DCAEntry => ({
-                id: e.id.startsWith('tmp-') ? '' : e.id,
-                date: e.date ? new Date(e.date + 'T00:00:00Z').toISOString() : new Date().toISOString(),
-                amount: e.amount ?? 0,
-                shares: e.shares ?? 0,
-                price: e.price && e.price > 0 ? e.price : undefined,
-                fee: e.fee && e.fee > 0 ? e.fee : undefined,
-                note: e.note || undefined,
-            })),
+            .map(
+                (e): DCAEntry => ({
+                    id: e.id.startsWith('tmp-') ? '' : e.id,
+                    date: e.date ? new Date(`${e.date}T00:00:00Z`).toISOString() : new Date().toISOString(),
+                    amount: e.amount ?? 0,
+                    shares: e.shares ?? 0,
+                    price: e.price && e.price > 0 ? e.price : undefined,
+                    fee: e.fee && e.fee > 0 ? e.fee : undefined,
+                    note: e.note || undefined,
+                }),
+            ),
     };
 }
 

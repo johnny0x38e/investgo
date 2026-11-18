@@ -861,7 +861,8 @@ const messages: Record<SupportedLocale, TranslationTree> = {
                 promptTitle: 'Update Available',
                 readyTitle: 'Update Ready',
                 promptHint: 'A new version is available. Download it now, or update later in Settings → About.',
-                restartHint: 'The update has been downloaded. Restarting will briefly close the app. Restart when convenient to finish updating.',
+                restartHint:
+                    'The update has been downloaded. Restarting will briefly close the app. Restart when convenient to finish updating.',
                 later: 'Later',
                 releaseNotes: 'Release notes',
                 autoCheck: 'Automatically check for updates',

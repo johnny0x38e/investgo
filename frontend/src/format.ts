@@ -1,6 +1,6 @@
-import type { AppSettings, HistoryInterval } from './types';
-import { translate } from './i18n';
 import { defaultSettings } from './forms';
+import { translate } from './i18n';
+import type { AppSettings, HistoryInterval } from './types';
 
 let settings: AppSettings = { ...defaultSettings };
 

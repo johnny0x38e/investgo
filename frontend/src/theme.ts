@@ -1,5 +1,5 @@
-import Aura from '@primeuix/themes/aura';
 import { definePreset, palette, updatePreset } from '@primeuix/themes';
+import Aura from '@primeuix/themes/aura';
 
 import type { ColorTheme } from './types';
 

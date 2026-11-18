@@ -1,6 +1,6 @@
 <script setup lang="ts">
-    import { computed } from 'vue';
     import Skeleton from 'primevue/skeleton';
+    import { computed } from 'vue';
 
     import { formatMoney, formatPercent } from '../format';
     import { useI18n } from '../i18n';
@@ -41,7 +41,10 @@
             {
                 label: t('summary.currentValue'),
                 value: formatMoney(value?.totalValue ?? 0),
-                sub: t('summary.syncedSub', { live: props.livePriceCount, total: props.itemCount }),
+                sub: t('summary.syncedSub', {
+                    live: props.livePriceCount,
+                    total: props.itemCount,
+                }),
                 tone: 'neutral',
                 currency,
             },
@@ -55,7 +58,10 @@
             {
                 label: t('summary.triggeredAlerts'),
                 value: String(value?.triggeredAlerts ?? 0),
-                sub: t('summary.winLossSub', { win: value?.winCount ?? 0, loss: value?.lossCount ?? 0 }),
+                sub: t('summary.winLossSub', {
+                    win: value?.winCount ?? 0,
+                    loss: value?.lossCount ?? 0,
+                }),
                 tone: (value?.triggeredAlerts ?? 0) > 0 ? 'warn' : 'neutral',
             },
         ];
@@ -78,7 +84,9 @@
                 <span
                     class="summary-sub"
                     :class="card.tone === 'rise' || card.tone === 'fall' ? `tone-${card.tone}` : ''"
-                    >{{ card.sub }}</span
+                    >{{
+                        card.sub
+                    }}</span
                 >
             </template>
         </article>

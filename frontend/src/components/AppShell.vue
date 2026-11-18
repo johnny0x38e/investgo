@@ -1,10 +1,14 @@
 <script setup lang="ts">
-    import AppHeader from './AppHeader.vue';
-    import AppSidebar from './AppSidebar.vue';
     import { useSidebarLayout } from '../composables/useSidebarLayout';
     import { useI18n } from '../i18n';
-    import { getDesktopPlatform, shouldReserveMacWindowControls, shouldShowCustomWindowControls } from '../wails-runtime';
     import type { HotMarketGroup, ModuleKey, StatusTone, WatchlistItem } from '../types';
+    import {
+        getDesktopPlatform,
+        shouldReserveMacWindowControls,
+        shouldShowCustomWindowControls,
+    } from '../wails-runtime';
+    import AppHeader from './AppHeader.vue';
+    import AppSidebar from './AppSidebar.vue';
 
     const props = defineProps<{
         activeModule: ModuleKey;
@@ -26,7 +30,7 @@
 
     const { t } = useI18n();
     const isMacOS = getDesktopPlatform() === 'darwin';
-    const { appShellRef, sidebarWidth, sidebarHidden, toggleSidebar, startSidebarResize } = useSidebarLayout();
+    const { sidebarWidth, sidebarHidden, toggleSidebar, startSidebarResize } = useSidebarLayout();
 </script>
 
 <template>
@@ -192,6 +196,26 @@
         flex: 1 1 auto;
     }
 
+    .sidebar-chrome-toggle {
+        width: 30px;
+        height: 30px;
+        padding: 0;
+        border-radius: var(--radius-control);
+        color: var(--muted);
+        background: transparent;
+        border: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 14px;
+        transition: color 120ms ease;
+    }
+
+    .sidebar-chrome-toggle:hover {
+        color: var(--ink);
+    }
+
     .main-topbar .sidebar-chrome-toggle {
         margin-left: var(--window-control-inset-left);
         margin-right: 4px;
@@ -222,26 +246,6 @@
         flex-direction: column;
         overflow: hidden;
         padding: 2px 0 0;
-    }
-
-    .sidebar-chrome-toggle {
-        width: 30px;
-        height: 30px;
-        padding: 0;
-        border-radius: var(--radius-control);
-        color: var(--muted);
-        background: transparent;
-        border: none;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        font-size: 14px;
-        transition: color 120ms ease;
-    }
-
-    .sidebar-chrome-toggle:hover {
-        color: var(--ink);
     }
 
     .is-macos .sidebar-column {

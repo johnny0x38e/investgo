@@ -295,7 +295,8 @@
             </div>
 
             <div ref="plotRef" class="chart-plot">
-                <svg class="chart-svg" :viewBox="`0 0 ${width} ${height}`" :aria-label="t('chart.aria')">
+                <svg class="chart-svg" role="img" :viewBox="`0 0 ${width} ${height}`" :aria-label="t('chart.aria')">
+                    <title>{{ t('chart.aria') }}</title>
                     <defs>
                         <linearGradient :id="gradientID" x1="0" y1="0" x2="0" y2="1">
                             <stop class="chart-area-stop-top" offset="0%" />
@@ -390,6 +391,7 @@
                     <path class="chart-area" :d="areaPath" :style="{ fill: `url(#${gradientID})` }" />
                     <path class="chart-line" :d="linePath" />
                     <circle v-if="currentPoint" class="chart-dot" :cx="currentPoint.x" :cy="currentPoint.y" r="4" />
+                    <!-- biome-ignore lint/a11y/noStaticElementInteractions: invisible hit target for chart hover tracking -->
                     <rect
                         class="chart-hit-area"
                         :x="padding.left"
